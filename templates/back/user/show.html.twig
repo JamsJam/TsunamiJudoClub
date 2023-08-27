@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Uuid</th>
+                <td>{{ user.uuid }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissance</th>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ user.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ user.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ user.telephone }}</td>
+            </tr>
+            <tr>
+                <th>UrgNom</th>
+                <td>{{ user.urgNom }}</td>
+            </tr>
+            <tr>
+                <th>UrgPrenom</th>
+                <td>{{ user.urgPrenom }}</td>
+            </tr>
+            <tr>
+                <th>UrgNumero</th>
+                <td>{{ user.urgNumero }}</td>
+            </tr>
+            <tr>
+                <th>CertifMedical</th>
+                <td>{{ user.certifMedical ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>LicencePaid</th>
+                <td>{{ user.licencePaid ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CoursPaid</th>
+                <td>{{ user.coursPaid ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_b_a_c_k_user_index') }}">back to list</a>
+
+    <a href="{{ path('app_b_a_c_k_user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('back/user/_delete_form.html.twig') }}
+{% endblock %}
