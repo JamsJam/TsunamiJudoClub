@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\BACK;
+namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/back/user')]
+// #[Route('/back/user')] a décommenté apres modification
+#[Route('')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_back_user_index', methods: ['GET'])]

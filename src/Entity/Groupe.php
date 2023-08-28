@@ -18,12 +18,13 @@ class Groupe
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'groupes')]
-    private Collection $user;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groupes')]
+    private Collection $users;
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -43,27 +44,29 @@ class Groupe
         return $this;
     }
 
+
+    
     /**
      * @return Collection<int, User>
      */
-    public function getUser(): Collection
+    public function getUsers(): Collection
     {
-        return $this->user;
+        return $this->users;
     }
 
-    public function addUser(User $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
+    // public function addUser(User $users): static
+    // {
+    //     if (!$this->users->contains($users)) {
+    //         $this->users->add($users);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeUser(User $user): static
-    {
-        $this->user->removeElement($user);
+    // public function removeUser(User $user): static
+    // {
+    //     $this->user->removeElement($user);
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

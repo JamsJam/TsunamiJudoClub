@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Uuid</th>
+                <th>Email</th>
                 <th>Roles</th>
                 <th>Password</th>
                 <th>Nom</th>
@@ -24,7 +24,6 @@
                 <th>CertifMedical</th>
                 <th>LicencePaid</th>
                 <th>CoursPaid</th>
-                <th>Email</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -32,7 +31,7 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.uuid }}</td>
+                <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>{{ user.nom }}</td>
@@ -47,7 +46,6 @@
                 <td>{{ user.certifMedical ? 'Yes' : 'No' }}</td>
                 <td>{{ user.licencePaid ? 'Yes' : 'No' }}</td>
                 <td>{{ user.coursPaid ? 'Yes' : 'No' }}</td>
-                <td>{{ user.email }}</td>
                 <td>
                     <a href="{{ path('app_back_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_back_user_edit', {'id': user.id}) }}">edit</a>
@@ -55,7 +53,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="18">no records found</td>
+                <td colspan="17">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

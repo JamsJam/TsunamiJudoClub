@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $uuid = null;
+    private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -65,13 +65,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $coursPaid = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
 
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?Ceinture $ceinture = null;
 
-    #[ORM\ManyToMany(targetEntity: Groupe::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'users')]
     private Collection $groupes;
 
     public function __construct()
@@ -79,20 +77,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->groupes = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUuid(): ?string
+    public function getEmail(): ?string
     {
-        return $this->uuid;
+        return $this->email;
     }
 
-    public function setUuid(string $uuid): static
+    public function setEmail(string $email): static
     {
-        $this->uuid = $uuid;
+        $this->email = $email;
 
         return $this;
     }
@@ -149,8 +146,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-
 
     public function getNom(): ?string
     {
@@ -296,17 +291,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getCeinture(): ?Ceinture
     {
@@ -332,7 +316,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->groupes->contains($groupe)) {
             $this->groupes->add($groupe);
-            $groupe->addUser($this);
         }
 
         return $this;
@@ -340,10 +323,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeGroupe(Groupe $groupe): static
     {
-        if ($this->groupes->removeElement($groupe)) {
-            $groupe->removeUser($this);
-        }
+        $this->groupes->removeElement($groupe);
 
         return $this;
     }
+
+
+
 }
